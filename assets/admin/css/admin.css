@@ -1,0 +1,35 @@
+.product-image-box
+{
+	float: left;
+	width: 250px;
+}
+
+.product-image-container
+{
+	border: 1px solid #e7eaec;
+	padding: 0;
+	background-color: #ffffff;
+	position: relative;
+	margin-bottom: 20px;
+	margin-right: 20px;
+}
+
+.corner
+{
+	position: absolute;
+	display: inline-block;
+	width: 0;
+	height: 0;
+	line-height: 0;
+	border: 0.6em solid transparent;
+	border-right: 0.6em solid #f1f1f1;
+	border-bottom: 0.6em solid #f1f1f1;
+	right: 0em;
+	bottom: 0em;
+}
+
+.product-image-container .image
+{
+	height: 100px;
+	overflow: hidden;
+}

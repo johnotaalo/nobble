@@ -7,8 +7,8 @@ class Template extends MY_Controller
 		parent::__construct();
 	}
 
-	function call_admin_template()
+	function call_admin_template($data = NULL)
 	{
-		echo "Admin Template";die;
+		$this->load->view('template/admin_template', $data);
 	}
 }

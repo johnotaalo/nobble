@@ -10,6 +10,8 @@ class Dashboard extends MY_Controller
 
 	function index()
 	{
-		$this->template->call_admin_template();
+		$data['list_item'] = 'dashboard';
+		$data['content_view'] = 'dashboard/dashboard';
+		$this->template->call_admin_template($data);
 	}
 }
