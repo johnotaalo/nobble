@@ -3,7 +3,7 @@
 		<label for="product_name">Product Name</label>
 		<input type="text" class="form-control" id="product_name" placeholder="Enter Name of product" name = "product_name">
 	</div>
-
+	<?php ?>
 	<div class="form-group">
 		<label for="product_description">Description</label>
 		<textarea name = "description" id="product_description" placeholder="Enter Description of product" class = "form-control" row = "5"></textarea>

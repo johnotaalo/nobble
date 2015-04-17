@@ -25,9 +25,9 @@ class M_Products extends MY_Model
 		return $result;
 	}
 
-	function get_product_by_category($category_id)
+	function get_product_by_category($category_id = NULL)
 	{
-		$query = $this->db->get_where('products', array('category_id' => $category_id));
+		$query = (isset($category_id)) ? $this->db->get_where('products', array('category_id' => $category_id)) : $this->db->get('products');
 
 		$result = $query->result_array();
 
@@ -45,6 +45,15 @@ class M_Products extends MY_Model
 	function get_product_by_id($product_id)
 	{
 		$query = $this->db->get_where('products', array('product_id' => $product_id));
+
+		$result = $query->row();
+
+		return $result;
+	}
+
+	function get_product_by_id_active($product_id)
+	{
+		$query = $this->db->get_where('products', array('product_id' => $product_id, 'is_active' => 1));
 
 		$result = $query->row();
 
@@ -104,5 +113,71 @@ class M_Products extends MY_Model
 		$update = $this->db->update($table, $update_data);
 
 		return $update;
+	}
+
+	function get_recent_products()
+	{
+		$query = $this->db->query('SELECT * FROM products WHERE is_active = 1 ORDER BY added_on DESC LIMIT 4');
+
+		$result = $query->result_array();
+
+		return $result;
+
+	}
+
+	function get_latest_product_image_by_id($product_id)
+	{
+		$query = $this->db->query('SELECT image_path FROM product_images WHERE product_id = ' . $product_id .' AND is_active = 1 ORDER BY added_on DESC LIMIT 2');
+
+		$result = $query->row();
+
+		return $result;
+	}
+
+	function get_active_products_by_category($category_id)
+	{
+		$query = $this->db->get_where('products', array('category_id' => $category_id, 'is_active' => 1));
+
+		$result = $query->result_array();
+
+		return $result;
+	}
+
+	function get_all_products()
+	{
+		$query = $this->db->get_where('products', array('is_active' => 1));
+
+		$result = $query->result_array();
+
+		return $result;
+	}
+
+	function search_category($parameter)
+	{
+		$query = $this->db->query("SELECT * FROM category WHERE category_name LIKE '%".$parameter."%' OR category_description LIKE '%".$parameter."%'");
+		$result = $query->result_array();
+		return $result;
+	}
+
+	function get_most_ordered($limit)
+	{
+		$query = $this->db->query("SELECT p.product_id, p.product_name, count(i.product_id) as orders, p.price FROM customer_order_items i
+			JOIN products p ON p.product_id = i.product_id
+			GROUP BY p.product_id
+            ORDER BY orders DESC
+            LIMIT " . $limit);
+		
+		$result = ($limit == 1) ? $query->row() : $query->result();
+
+		return $result;
+	}
+
+	function get_cheapest_product($limit)
+	{
+		$query = $this->db->query("SELECT * FROM products WHERE is_active = 1 ORDER BY price LIMIT " .$limit);
+
+		$result = $query->result();
+
+		return $result;
 	}
 }

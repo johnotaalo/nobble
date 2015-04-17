@@ -21,7 +21,7 @@
 
 		<div class = "form-group">
 			<label for = "cover">Cover Image</label>
-			<input type = "file" name = "blog_cover" class = 'form-control' required>
+			<input type = "file" name = "blog_cover" class = 'form-control'>
 		</div>
 		<div class = "form-group">
 			<label for = "blog_name">Blog Name</label>
@@ -53,14 +53,6 @@
 		CKEDITOR.replace('editor1');
 		$('.activator').click(function(){
 			$('#published').val($(this).attr('data-activation'));
-			processform('blog_form', function(data){
-				$('.message_box').html('<p style = "color: green">'+data.message+'</p>');
-				reset_form('blog_form');
-				setTimeout(function() {
-					$(".message_box p").remove();
-				}, 5000);
-				location.reload();
-			});
 		});
 
 		$('#cancel').click(function(){

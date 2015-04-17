@@ -22,8 +22,8 @@
 </style>
 <div class = "row" style = "padding-left: 30px;padding-right: 30px;">
 	<ol class="breadcrumb">
-		<li><a href="<?php echo base_url();?>products/"><i class = "fa fa-barcode"></i> Products</a></li>
-		<li><a href="<?php echo base_url();?>products/category/<?php echo $category->category_id; ?>"><i class = "ion ion-folder"></i> <?php echo $category->category_name; ?></a></li>
+		<li><a href="<?php echo base_url();?>dashboard/categories"><i class = "fa fa-barcode"></i> Products</a></li>
+		<li><a href="<?php echo base_url();?>dashboard/category/<?php echo $category->category_id; ?>"><i class = "ion ion-folder"></i> <?php echo $category->category_name; ?></a></li>
 		<li class="active"><?php echo $product_details->product_name; ?></li>
 	</ol>
 </div>

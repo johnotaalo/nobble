@@ -2,6 +2,7 @@
 // error_reporting(E_ALL ^ E_DEPRECATED);
 class MY_Model extends CI_Model
 {
+	var $frags;
 	function __construct()
 	{
 		parent::__construct();

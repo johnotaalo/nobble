@@ -12,6 +12,21 @@ $(document).ready(function(){
 
 		get_page(view, target);
 	});
+
+	$('.action-page').click(function(){
+		load_view(this);
+	});
+
+	$('.action-x').click(function(){
+		target = '#' + $(this).attr('data-target');
+		url = $(this).attr('data-url');
+		title = $(this).attr('data-title');
+		process_ajax(url, function(data){
+			$('.general_modal').modal('show');
+			$('#form-modal-title').html(title);
+			$(target).html(data);
+		});
+	});
 });
 
 function process_ajax(data_url, handledata)
@@ -19,9 +34,11 @@ function process_ajax(data_url, handledata)
 	$.ajax({
 		url: base_url + data_url,
 		beforeSend: function( xhr ) {
+			$('.ajax-overlay').show();
 		}
 	})
 	.done(function( data ) {
+		$('.ajax-overlay').hide();
 		handledata(data);
 	});
 }
@@ -32,6 +49,8 @@ function get_page(view, target)
 		$(target).html(data);
 	});
 }
+
+
 
 function processform(form_id, handledata)
 {
@@ -53,14 +72,16 @@ function processform(form_id, handledata)
 			},
 			success:function(data, textStatus, jqXHR) 
 			{
+				console.log(data);
 				obj = jQuery.parseJSON(data); 
 				handledata(obj);
 			},
 			error: function(jqXHR, textStatus, errorThrown) 
 			{
-
+				console.log(errorThrown + ' => ' + textStatus);
 			}
-		});	});
+		});	
+	});
 }
 
 function load_page(that)
@@ -79,6 +100,24 @@ function load_page(that)
 	get_page(view, target);
 }
 
+function load_view(that)
+{
+	target = '#' + $(that).attr('data-target');
+	f = $(that).attr('data-view');
+	f = f.replace(/_/g, '/');
+	actiontype = $(that).attr('data-type');
+	process_ajax(f, function(data){
+		// $('table').dataTable();
+		if(actiontype === 'action-modal')
+		{
+			title = $(that).attr('data-title');
+			$('.general_modal').modal('show');
+			$('#form-modal-title').html(title);
+		}
+		$(target).html(data);
+	});
+
+}
 function createtopiclist()
 {
 	process_ajax('blog/createtopiclist/select/1', function(data){
@@ -90,4 +129,9 @@ function reset_form(form_id)
 {
 	$('#'+form_id)[0].reset();
 	$('#'+form_id).find('textarea.ckdified').val('');
+}
+
+function action_x(that)
+{
+
 }
